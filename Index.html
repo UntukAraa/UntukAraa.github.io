@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 Buku Kenangan Kita</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ee;
+    --warm: #f5e6d3;
+    --gold: #c9973e;
+    --gold-light: #e8c88a;
+    --brown: #6b4226;
+    --rose: #c4747a;
+    --rose-light: #e8a5aa;
+    --ink: #2c1810;
+    --ink-light: #5a3825;
+    --shadow: rgba(44,24,16,0.18);
+    --page-w: min(420px, 90vw);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #1a0e08;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(201,151,62,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(196,116,122,0.1) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9973e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 10px 100px;
+    overflow-x: hidden;
+  }
+
+  /* =========== COVER =========== */
+  #cover-screen {
+    position: fixed;
+    inset: 0;
+    background: #1a0e08;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    gap: 0;
+  }
+
+  .cover-book {
+    position: relative;
+    width: 280px;
+    height: 360px;
+    perspective: 800px;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+
+  .cover-front {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8b4513 0%, #6b2f0e 30%, #4a1f08 100%);
+    border-radius: 4px 16px 16px 4px;
+    box-shadow:
+      -6px 6px 20px rgba(0,0,0,0.6),
+      inset -2px 0 8px rgba(0,0,0,0.3),
+      inset 2px 0 4px rgba(201,151,62,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transform-origin: left center;
+    transition: transform 0.6s ease;
+  }
+
+  .cover-book:hover .cover-front {
+    transform: perspective(800px) rotateY(-15deg);
+  }
+
+  .cover-front::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to right, rgba(0,0,0,0.4), rgba(201,151,62,0.3), rgba(0,0,0,0.4));
+  }
+
+  .cover-ornament {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: var(--gold);
+    position: relative;
+  }
+
+  .cover-ornament::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201,151,62,0.4);
+    border-radius: 50%;
+  }
+
+  .cover-title {
+    font-family: 'Dancing Script', cursive;
+    color: var(--gold-light);
+    font-size: 22px;
+    text-align: center;
+    padding: 0 24px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    line-height: 1.3;
+  }
+
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    color: rgba(201,151,62,0.7);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .cover-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .cover-hint {
+    font-family: 'Cormorant Garamond', serif;
+    color: rgba(201,151,62,0.6);
+    font-size: 14px;
+    font-style: italic;
+    animation: pulse-hint 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-hint {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .cover-screen-title {
+    font-family: 'Dancing Script', cursive;
+    color: var(--gold);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .cover-screen-sub {
+    font-family: 'Cormorant Garamond', serif;
+    color: rgba(201,151,62,0.5);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  /* =========== BOOK CONTAINER =========== */
+  #app {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* =========== HEADER =========== */
+  .book-header {
+    text-align: center;
+    margin-bottom: 30px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .book-header h1 {
+    font-family: 'Dancing Script', cursive;
+    color: var(--gold);
+    font-size: clamp(28px, 5vw, 48px);
+    text-shadow: 0 2px 20px rgba(201,151,62,0.4);
+    margin-bottom: 4px;
+  }
+
+  .book-header p {
+    color: rgba(201,151,62,0.5);
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  /* =========== MUSIC PLAYER =========== */
+  .music-bar {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,151,62,0.2);
+    border-radius: 50px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    animation: fadeDown 1s ease 0.2s both;
+  }
+
+  .music-btn {
+    background: var(--gold);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: transform 0.2s, background 0.2s;
+    color: #1a0e08;
+  }
+
+  .music-btn:hover { transform: scale(1.1); background: var(--gold-light); }
+
+  .music-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .music-name {
+    font-family: 'Dancing Script', cursive;
+    color: var(--gold-light);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .music-progress-wrap {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    margin-top: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .music-progress {
+    height: 100%;
+    background: linear-gradient(to right, var(--gold), var(--rose));
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.5s linear;
+  }
+
+  .music-vol {
+    background: none;
+    border: 1px solid rgba(201,151,62,0.3);
+    color: var(--gold);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .music-vol:hover { background: rgba(201,151,62,0.1); }
+
+  .music-add {
+    background: none;
+    border: 1px solid rgba(201,151,62,0.3);
+    color: var(--gold);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .music-add:hover { background: rgba(201,151,62,0.15); transform: scale(1.1); }
+
+  /* =========== BOOK SPREAD =========== */
+  .book-spread {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    animation: bookOpen 0.8s ease both;
+  }
+
+  @keyframes bookOpen {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .book-spine {
+    width: 20px;
+    background: linear-gradient(to right, #3a1a08, #6b3010, #3a1a08);
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 500px;
+  }
+
+  /* Single page on mobile, spread on desktop */
+  .page-left, .page-right {
+    width: var(--page-w);
+    min-height: 500px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .page-left {
+    border-radius: 8px 0 0 8px;
+    box-shadow: -4px 4px 20px rgba(0,0,0,0.4);
+    border-right: 1px solid rgba(107,66,38,0.2);
+  }
+
+  .page-right {
+    border-radius: 0 8px 8px 0;
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.4);
+  }
+
+  /* Page texture */
+  .page-left::before, .page-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 1;
+    padding: 32px 28px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    color: var(--brown);
+    opacity: 0.5;
+    letter-spacing: 2px;
+  }
+
+  .page-left .page-number { right: 20px; }
+  .page-right .page-number { left: 20px; }
+
+  /* Page corner fold */
+  .page-right::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(225deg, #ddd 45%, transparent 46%);
+    opacity: 0.4;
+    border-top-left-radius: 4px;
+  }
+
+  /* =========== PAGE CONTENT ELEMENTS =========== */
+  .photo-frame {
+    position: relative;
+    border: 6px solid white;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15), 0 1px 4px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transform: rotate(var(--tilt, 0deg));
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--brown);
+    opacity: 0.5;
+    background: linear-gradient(135deg, var(--warm), #eddec8);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .photo-placeholder:hover { opacity: 0.7; }
+
+  .photo-placeholder span:first-child { font-size: 28px; }
+
+  .photo-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-align: center;
+    margin-top: -8px;
+    opacity: 0.7;
+  }
+
+  .page-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--ink);
+    font-size: clamp(14px, 2.5vw, 17px);
+    line-height: 1.7;
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+
+  .page-quote::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--rose-light);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .page-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(20px, 3.5vw, 28px);
+    color: var(--brown);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .page-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+
+  .divider-ornament span {
+    font-size: 14px;
+    color: var(--gold);
+  }
+
+  .heart-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .heart-list li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .heart-list li::before {
+    content: '♥';
+    position: absolute;
+    left: 0;
+    color: var(--rose);
+    font-size: 10px;
+    top: 3px;
+  }
+
+  .polaroid-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .mini-polaroid {
+    background: white;
+    padding: 6px 6px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .mini-polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+
+  .mini-polaroid .ph {
+    height: 80px;
+    background: linear-gradient(135deg, var(--warm), #e0cdb4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    overflow: hidden;
+  }
+
+  .mini-polaroid .ph img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mini-polaroid .pl {
+    font-family: 'Dancing Script', cursive;
+    font-size: 10px;
+    color: var(--brown);
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* =========== NAVIGATION =========== */
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .nav-btn {
+    background: rgba(201,151,62,0.1);
+    border: 1px solid rgba(201,151,62,0.3);
+    color: var(--gold);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 1px;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    background: var(--gold);
+    color: #1a0e08;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,151,62,0.3);
+  }
+
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .page-indicator {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 200px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(201,151,62,0.25);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+
+  .dot.active { background: var(--gold); transform: scale(1.3); }
+  .dot.visited { background: rgba(201,151,62,0.5); }
+
+  /* =========== FEATURES PANEL =========== */
+  .features-panel {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .feat-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,151,62,0.2);
+    color: rgba(201,151,62,0.7);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .feat-btn:hover {
+    background: rgba(201,151,62,0.1);
+    color: var(--gold);
+    border-color: rgba(201,151,62,0.4);
+  }
+
+  /* =========== MODAL =========== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-box {
+    background: var(--cream);
+    border-radius: 16px;
+    max-width: 480px;
+    width: 100%;
+    padding: 32px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.open .modal-box { transform: scale(1); }
+
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--brown);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .modal-close:hover { opacity: 1; }
+
+  .modal-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    color: var(--brown);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--brown);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    border: 1px solid rgba(107,66,38,0.25);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,151,62,0.1);
+  }
+
+  .form-textarea { resize: vertical; min-height: 80px; }
+
+  .form-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 18px;
+    color: #1a0e08;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .form-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,151,62,0.4); }
+
+  /* =========== TABLE OF CONTENTS =========== */
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid rgba(107,66,38,0.1);
+  }
+
+  .toc-item:hover { background: rgba(201,151,62,0.08); border-color: rgba(201,151,62,0.2); }
+  .toc-item.current { background: rgba(201,151,62,0.12); border-color: var(--gold-light); }
+
+  .toc-num {
+    font-family: 'Dancing Script', cursive;
+    font-size: 18px;
+    color: var(--gold);
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .toc-info { flex: 1; }
+
+  .toc-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--brown);
+    font-weight: 400;
+  }
+
+  .toc-sub {
+    font-size: 11px;
+    color: var(--ink-light);
+    opacity: 0.6;
+  }
+
+  /* =========== MUSIC LIST =========== */
+  .song-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .song-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(107,66,38,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .song-item:hover { background: rgba(201,151,62,0.06); border-color: rgba(201,151,62,0.2); }
+  .song-item.playing { background: rgba(201,151,62,0.1); border-color: var(--gold); }
+
+  .song-icon { font-size: 18px; }
+
+  .song-name {
+    flex: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--brown);
+  }
+
+  .song-play {
+    background: none;
+    border: 1px solid rgba(201,151,62,0.3);
+    color: var(--gold);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .song-play:hover { background: var(--gold); color: #1a0e08; }
+
+  /* =========== MEMORY WALL =========== */
+  .memory-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 4px;
+  }
+
+  .memory-thumb {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .memory-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .memory-thumb:hover { transform: scale(1.08); }
+
+  /* =========== SPECIAL PAGES =========== */
+  .special-page {
+    background: linear-gradient(135deg, #fff8f0, #fce8d8) !important;
+  }
+
+  .love-letter-bg {
+    background-image:
+      repeating-linear-gradient(transparent, transparent 27px, rgba(107,66,38,0.08) 27px, rgba(107,66,38,0.08) 28px) !important;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--rose);
+    flex-shrink: 0;
+    margin-top: 5px;
+    box-shadow: 0 0 0 3px rgba(196,116,122,0.2);
+  }
+
+  .timeline-content {}
+  .timeline-date {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .timeline-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+
+  .timeline-line {
+    width: 1px;
+    background: linear-gradient(to bottom, var(--rose-light), transparent);
+    margin: 2px 0 2px 4px;
+    height: 16px;
+  }
+
+  /* =========== ANIMATIONS =========== */
+  @keyframes fadeDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes pageFlip {
+    0% { transform: perspective(1000px) rotateY(0deg); opacity: 1; }
+    50% { transform: perspective(1000px) rotateY(-45deg); opacity: 0.5; }
+    100% { transform: perspective(1000px) rotateY(0deg); opacity: 1; }
+  }
+
+  .flipping { animation: pageFlip 0.4s ease; }
+
+  /* =========== UPLOAD AREA =========== */
+  .upload-area {
+    border: 2px dashed rgba(107,66,38,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(253,246,238,0.5);
+  }
+
+  .upload-area:hover {
+    border-color: var(--gold);
+    background: rgba(201,151,62,0.05);
+  }
+
+  /* =========== TOAST =========== */
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: var(--gold-light);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    border: 1px solid rgba(201,151,62,0.3);
+    z-index: 900;
+    transition: transform 0.4s;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* =========== RESPONSIVE =========== */
+  @media (max-width: 700px) {
+    .page-right { display: none; }
+    .book-spine { display: none; }
+    .page-left { border-radius: 8px; }
+    :root { --page-w: min(360px, 94vw); }
+  }
+
+  @media (min-width: 701px) {
+    .book-spread { gap: 0; }
+  }
+
+  /* =========== HEARTS ANIMATION =========== */
+  .floating-heart {
+    position: fixed;
+    pointer-events: none;
+    font-size: 18px;
+    z-index: 800;
+    animation: floatHeart 3s ease-out forwards;
+  }
+
+  @keyframes floatHeart {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
+  }
+
+  /* =========== SLIDESHOW =========== */
+  #slideshow-modal .modal-box {
+    background: #111;
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    max-width: 600px;
+  }
+
+  .slideshow-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .slideshow-placeholder {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #2a1a10, #3d2210);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(201,151,62,0.5);
+    font-size: 48px;
+  }
+
+  .slideshow-caption {
+    padding: 20px;
+    background: #111;
+    text-align: center;
+  }
+
+  .slideshow-caption p {
+    font-family: 'Dancing Script', cursive;
+    color: var(--gold-light);
+    font-size: 18px;
+  }
+
+  .slideshow-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    background: #111;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER SCREEN -->
+<div id="cover-screen">
+  <div class="cover-screen-title">Buku Kenangan Kita</div>
+  <div class="cover-screen-sub">A Love Story</div>
+  <div class="cover-book" onclick="openBook()">
+    <div class="cover-front">
+      <div class="cover-ornament">📖</div>
+      <div class="cover-divider"></div>
+      <div class="cover-title">Kenangan Indah<br>Yang Tak Terlupakan</div>
+      <div class="cover-subtitle">2024 — Selamanya</div>
+    </div>
+  </div>
+  <div class="cover-hint">✦ Klik buku untuk membuka ✦</div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <div class="book-header">
+    <h1>📖 Buku Kenangan Kita</h1>
+    <p>Setiap halaman, sebuah cerita</p>
+  </div>
+
+  <!-- MUSIC PLAYER -->
+  <div class="music-bar">
+    <button class="music-btn" id="playBtn" onclick="togglePlay()">▶</button>
+    <div class="music-info">
+      <div class="music-name" id="songTitle">♪ Pilih lagu favoritmu...</div>
+      <div class="music-progress-wrap" onclick="seekMusic(event)">
+        <div class="music-progress" id="musicProgress"></div>
+      </div>
+    </div>
+    <button class="music-vol" onclick="toggleMute()">🔊 Vol</button>
+    <button class="music-add" title="Tambah lagu" onclick="openModal('music-modal')">+</button>
+  </div>
+
+  <!-- BOOK SPREAD -->
+  <div class="book-spread" id="bookSpread">
+    <div class="page-left" id="pageLeft">
+      <div class="page-content" id="pageLeftContent"></div>
+      <span class="page-number" id="leftPageNum"></span>
+    </div>
+    <div class="book-spine"></div>
+    <div class="page-right" id="pageRight">
+      <div class="page-content" id="pageRightContent"></div>
+      <span class="page-number" id="rightPageNum"></span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="prevPage()">← Kembali</button>
+    <div class="nav-center">
+      <span class="page-indicator" id="pageIndicator">1 / 10</span>
+      <div class="progress-dots" id="progressDots"></div>
+    </div>
+    <button class="nav-btn" id="nextBtn" onclick="nextPage()">Lanjut →</button>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features-panel">
+    <button class="feat-btn" onclick="openModal('toc-modal')">📚 Daftar Isi</button>
+    <button class="feat-btn" onclick="openModal('photo-modal')">📸 Tambah Foto</button>
+    <button class="feat-btn" onclick="openModal('memory-modal')">🖼 Galeri Kenangan</button>
+    <button class="feat-btn" onclick="openModal('message-modal')">💌 Tulis Pesan</button>
+    <button class="feat-btn" onclick="openModal('slideshow-modal')">▶ Slideshow</button>
+    <button class="feat-btn" onclick="openModal('share-modal')">🔗 Bagikan</button>
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- TABLE OF CONTENTS -->
+<div class="modal-overlay" id="toc-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('toc-modal')">×</button>
+    <div class="modal-title">📚 Daftar Isi</div>
+    <ul class="toc-list" id="tocList"></ul>
+  </div>
+</div>
+
+<!-- ADD PHOTO -->
+<div class="modal-overlay" id="photo-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('photo-modal')">×</button>
+    <div class="modal-title">📸 Tambah Foto</div>
+    <div class="form-group">
+      <label class="form-label">PILIH HALAMAN</label>
+      <select class="form-input" id="photoPage">
+        <option value="">-- Pilih halaman --</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">POSISI FOTO</label>
+      <select class="form-input" id="photoSlot">
+        <option value="0">Foto 1</option>
+        <option value="1">Foto 2</option>
+        <option value="2">Foto 3</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+        <div style="font-size:32px; margin-bottom:6px;">📷</div>
+        <div style="font-family:'Cormorant Garamond'; font-size:13px; color:var(--brown)">Klik untuk upload foto</div>
+        <div style="font-size:11px; color:var(--ink-light); opacity:0.5; margin-top:2px">JPG, PNG, WEBP</div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)">
+    </div>
+    <div id="photoPreview" style="display:none; margin-top:10px;">
+      <img id="photoPreviewImg" style="width:100%; border-radius:8px; max-height:200px; object-fit:cover;">
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label class="form-label">KETERANGAN FOTO</label>
+      <input class="form-input" id="photoCaption" placeholder="Tulis kenangan di sini...">
+    </div>
+    <button class="form-btn" onclick="savePhoto()">💾 Simpan Foto</button>
+  </div>
+</div>
+
+<!-- MEMORY GALLERY -->
+<div class="modal-overlay" id="memory-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('memory-modal')">×</button>
+    <div class="modal-title">🖼 Galeri Kenangan</div>
+    <div class="memory-wall" id="memoryWall"></div>
+    <p style="font-family:'Cormorant Garamond'; font-size:12px; color:var(--ink-light); text-align:center; margin-top:12px; opacity:0.6">Klik foto untuk memperbesar</p>
+  </div>
+</div>
+
+<!-- WRITE MESSAGE -->
+<div class="modal-overlay" id="message-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('message-modal')">×</button>
+    <div class="modal-title">💌 Tulis Pesan Cinta</div>
+    <div class="form-group">
+      <label class="form-label">HALAMAN TUJUAN</label>
+      <select class="form-input" id="msgPage">
+        <option value="">-- Pilih halaman --</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">PESAN UNTUKMU</label>
+      <textarea class="form-textarea" id="msgText" placeholder="Tuliskan kata-kata indah dari hatimu..."></textarea>
+    </div>
+    <button class="form-btn" onclick="saveMessage()">💌 Kirim Pesan</button>
+  </div>
+</div>
+
+<!-- MUSIC MODAL -->
+<div class="modal-overlay" id="music-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('music-modal')">×</button>
+    <div class="modal-title">🎵 Pilih Lagu</div>
+    <div class="song-list" id="songList"></div>
+    <div style="border-top:1px solid rgba(107,66,38,0.15); padding-top:16px; margin-top:4px;">
+      <div class="form-group">
+        <label class="form-label">TAMBAH LAGU DARI URL</label>
+        <input class="form-input" id="songUrl" placeholder="https://... (link audio MP3)">
+      </div>
+      <div class="form-group">
+        <input class="form-input" id="songName" placeholder="Nama lagu...">
+      </div>
+      <button class="form-btn" onclick="addSong()">+ Tambah Lagu</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDESHOW -->
+<div class="modal-overlay" id="slideshow-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('slideshow-modal'); stopSlideshow()">×</button>
+    <div id="slideshowContent">
+      <div class="slideshow-placeholder">
+        <span>📸</span>
+        <span style="font-family:'Dancing Script'; font-size:18px; color:rgba(201,151,62,0.5)">Belum ada foto</span>
+      </div>
+    </div>
+    <div class="slideshow-caption">
+      <p id="slideshowCaption">Tambahkan foto untuk memulai slideshow ✦</p>
+    </div>
+    <div class="slideshow-nav">
+      <button class="nav-btn" onclick="slideshowPrev()">← Prev</button>
+      <button class="nav-btn" id="ssPlayBtn" onclick="toggleSlideshow()">▶ Play</button>
+      <button class="nav-btn" onclick="slideshowNext()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div class="modal-overlay" id="share-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('share-modal')">×</button>
+    <div class="modal-title">🔗 Bagikan Kenangan</div>
+    <div style="text-align:center; padding: 20px 0;">
+      <div style="font-size:48px; margin-bottom:12px;">💝</div>
+      <p style="font-family:'Cormorant Garamond'; font-size:15px; color:var(--brown); line-height:1.8; margin-bottom:20px;">
+        Simpan halaman ini sebagai kenangan abadi.<br>
+        Klik tombol di bawah untuk menyimpan sebagai file atau screenshot.
+      </p>
+      <button class="form-btn" onclick="printPage()" style="margin-bottom:10px">🖨 Cetak / Simpan PDF</button>
+      <button class="form-btn" style="background:var(--rose); margin-top:8px" onclick="copyLink()">📋 Salin Link</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE LIGHTBOX -->
+<div class="modal-overlay" id="lightbox-modal">
+  <div class="modal-box" style="background:#000; padding:0; max-width:600px;">
+    <button class="modal-close" onclick="closeModal('lightbox-modal')" style="color:white; background:rgba(255,255,255,0.2); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; z-index:10; right:8px; top:8px;">×</button>
+    <img id="lightboxImg" style="width:100%; max-height:80vh; object-fit:contain; display:block; border-radius:8px;">
+    <div style="padding:12px; text-align:center;">
+      <p id="lightboxCaption" style="font-family:'Dancing Script'; color:var(--gold-light); font-size:16px;"></p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- AUDIO -->
+<audio id="audioPlayer" loop></audio>
+
+<script>
+// =========== DATA ===========
+const pages = [
+  {
+    title: "Permulaan Segalanya",
+    emoji: "🌸",
+    subtitle: "Januari 2024",
+    left: {
+      type: "cover-page",
+      quote: "Setiap cerita besar dimulai dari sebuah pertemuan yang tidak terduga.",
+      text: "Ini adalah awal dari segalanya. Hari di mana dunia terasa berbeda, di mana langkah kakimu menghampiri dan segalanya berubah selamanya.",
+      photo: 0,
+      photoLabel: "Pertemuan pertama ✨"
+    },
+    right: {
+      type: "timeline-page",
+      title: "Jejak Langkah Kita",
+      items: [
+        { date: "Jan 2024", text: "Pertemuan pertama yang tak terduga namun penuh makna" },
+        { date: "Feb 2024", text: "Percakapan pertama yang berlangsung hingga larut malam" },
+        { date: "Mar 2024", text: "Pertama kali kamu membuatku tertawa dengan tulus" },
+        { date: "Apr 2024", text: "Sadar bahwa hatiku sudah bukan milikku lagi" },
+      ],
+      photo: 1
+    }
+  },
+  {
+    title: "Hari-Hari Kecil",
+    emoji: "☕",
+    subtitle: "Momen Sehari-hari",
+    left: {
+      type: "photo-page",
+      title: "Hal-Hal Kecil yang Berarti",
+      photos: [0, 1, 2, 3],
+      labels: ["Kopi pagi kita", "Jalan sore", "Tawa kita", "Momen diam"]
+    },
+    right: {
+      type: "letter-page",
+      title: "Surat Kecil Untukmu",
+      text: "Kamu tidak perlu melakukan hal-hal besar untuk membuatku bahagia. Cukup hadir, cukup tersenyum, cukup ada. Itu sudah lebih dari cukup. Dalam kesederhanaanmulah aku menemukan rumah.",
+      quote: "Kebahagiaan terbesar bukan di tempat yang jauh, tapi ada di sampingmu."
+    }
+  },
+  {
+    title: "Saat Jauh",
+    emoji: "🌙",
+    subtitle: "Rindu yang Indah",
+    left: {
+      type: "quote-page",
+      quotes: [
+        "Jarak bukan penghalang, tapi pengingat betapa berharganya kamu.",
+        "Setiap malam aku menatap bintang yang sama, berharap kamu juga melihatnya.",
+        "Rinduku padamu sebesar langit malam yang tak bertepi.",
+      ]
+    },
+    right: {
+      type: "photo-text",
+      photo: 0,
+      photoLabel: "Malam yang kita rindukan",
+      text: "Bahkan ketika mil memisahkan kita, hatiku selalu tahu arah pulangnya — ke arahmu. Setiap pesan darimu adalah obat yang paling manjur.",
+    }
+  },
+  {
+    title: "Petualangan Bersama",
+    emoji: "🗺️",
+    subtitle: "Jelajah Dunia Kita",
+    left: {
+      type: "polaroid-page",
+      title: "Kenangan di Berbagai Tempat",
+      photos: [0, 1, 2, 3],
+      tilts: [-2, 1.5, -1, 2.5],
+      labels: ["Pantai kita", "Gunung impian", "Kota tua", "Petualangan baru"]
+    },
+    right: {
+      type: "checklist-page",
+      title: "Bucket List Kita 🗺️",
+      items: [
+        "Menonton sunset dari puncak gunung ✓",
+        "Makan di restoran mewah berdua",
+        "Road trip tanpa tujuan jelas ✓",
+        "Bermain hujan bersama ✓",
+        "Camping di bawah bintang",
+        "Belajar memasak makanan baru bersama ✓",
+        "Menonton aurora borealis",
+        "Menulis surat dan mengirimnya nyata"
+      ]
+    }
+  },
+  {
+    title: "Kata Hati",
+    emoji: "💬",
+    subtitle: "Yang Tak Terucap",
+    left: {
+      type: "heart-words",
+      title: "Apa yang Aku Cintai Darimu",
+      items: [
+        "Caramu tertawa ketika benar-benar bahagia",
+        "Matamu yang bicara lebih banyak dari kata-kata",
+        "Kehangatan tanganmu di hari yang dingin",
+        "Kesabaranmu menghadapi hari-hari sulitku",
+        "Senyummu di pagi hari yang memulai hariku",
+        "Caramu peduli tanpa harus diucapkan"
+      ]
+    },
+    right: {
+      type: "photo-text",
+      photo: 0,
+      photoLabel: "Kamu, dalam cahaya terbaikmu",
+      text: "Ada banyak kata yang ingin kusampaikan, tapi setiap kali kamu ada di dekatku, semua kata itu hilang. Yang tersisa hanya rasa syukur — bahwa aku beruntung mengenalmu.",
+      quote: "Bersama kamu, aku belajar apa artinya merasa utuh."
+    }
+  },
+  {
+    title: "Hari Spesial",
+    emoji: "🎂",
+    subtitle: "Merayakan Kita",
+    left: {
+      type: "special-celebration",
+      title: "Setiap Hari Bersamamu adalah Perayaan",
+      photo: 0,
+      photoLabel: "Hari yang tak terlupakan 🎉",
+      text: "Ulang tahunmu adalah hari favoritku — bukan karena kado atau kue, tapi karena aku punya alasan untuk mengatakan betapa syukurnya aku kamu lahir ke dunia ini."
+    },
+    right: {
+      type: "cake-wishes",
+      title: "Doa dan Harapanku Untukmu",
+      wishes: [
+        "🌟 Semoga setiap impianmu menjadi kenyataan",
+        "💪 Semoga kamu selalu kuat di setiap badai",
+        "🌈 Semoga kebahagiaan selalu mengikutimu",
+        "❤️ Semoga kamu selalu tahu betapa dicintainya kamu",
+        "✨ Semoga tahun ini lebih indah dari sebelumnya",
+        "🌸 Semoga hidupmu dipenuhi hal-hal baik"
+      ]
+    }
+  },
+  {
+    title: "Ketika Susah",
+    emoji: "🤝",
+    subtitle: "Bersama Melewati Segalanya",
+    left: {
+      type: "quote-page",
+      title: "Kekuatan Kita",
+      quotes: [
+        "Aku tidak butuh dunia yang sempurna, cukup kamu ada di sisiku.",
+        "Setiap badai yang kita lewati bersama membuat kita semakin kuat.",
+        "Di hari tergelapku, kamu adalah cahaya yang aku cari."
+      ]
+    },
+    right: {
+      type: "photo-text",
+      photo: 0,
+      photoLabel: "Saling menguatkan 🤝",
+      text: "Tidak setiap hari akan indah. Tapi di hari-hari yang berat itulah aku bersyukur paling banyak — karena kamu ada, karena kamu tidak pergi, karena kamu memilihku lagi dan lagi.",
+      quote: "Bersamamu, aku berani menghadapi hari apapun."
+    }
+  },
+  {
+    title: "Momen Lucu",
+    emoji: "😄",
+    subtitle: "Tawa yang Menyembuhkan",
+    left: {
+      type: "polaroid-page",
+      title: "Foto-Foto Gila Kita 😂",
+      photos: [0, 1, 2, 3],
+      tilts: [2, -2.5, 1.5, -1],
+      labels: ["Wajah konyol", "Selfie gagal", "Tawa gila", "Pose random"]
+    },
+    right: {
+      type: "heart-words",
+      title: "Hal Absurd yang Kita Lakukan",
+      items: [
+        "Nyanyi bareng lagu yang nggak hafal liriknya",
+        "Berdebat soal hal kecil yang tidak penting",
+        "Ketawa sampai sakit perut karena hal bodoh",
+        "Foto selfie ratusan kali untuk satu yang bagus",
+        "Nonton film sampai ketiduran sama-sama",
+        "Drama soal mau makan apa selama 1 jam"
+      ]
+    }
+  },
+  {
+    title: "Impian Bersama",
+    emoji: "🌠",
+    subtitle: "Masa Depan Kita",
+    left: {
+      type: "dream-page",
+      title: "Mimpi yang Kita Bangun",
+      text: "Setiap kali kamu berbicara tentang masa depan, matamu berbinar. Dan di saat itulah aku tahu — aku ingin ada di setiap bab kehidupanmu, di setiap cerita yang belum tertulis.",
+      photo: 0,
+      photoLabel: "Menatap masa depan 🌟"
+    },
+    right: {
+      type: "checklist-page",
+      title: "Rencana Indah Kita 💫",
+      items: [
+        "Membangun rumah kecil yang hangat",
+        "Punya perpustakaan pribadi berdua",
+        "Traveling ke Eropa bersama",
+        "Adopsi kucing atau anjing berbulu",
+        "Membuka usaha bersama dari passion",
+        "Menulis buku tentang perjalanan kita",
+        "Tua bersama sambil masih tertawa",
+        "Menjadi versi terbaik diri sendiri"
+      ]
+    }
+  },
+  {
+    title: "Terima Kasih",
+    emoji: "🙏",
+    subtitle: "Dari Lubuk Hati Terdalam",
+    left: {
+      type: "letter-page",
+      title: "Surat Tulus Untukmu",
+      text: "Terima kasih sudah memilihku di hari-hari kamu bisa memilih siapa saja. Terima kasih sudah bersabar ketika aku tidak mudah dimengerti. Terima kasih sudah hadir, dan terus hadir. Kamu adalah hadiah yang tidak pernah kuminta tapi selalu kusyukuri.",
+      quote: "Bertemu kamu adalah hal terbaik yang pernah terjadi padaku."
+    },
+    right: {
+      type: "photo-text",
+      photo: 0,
+      photoLabel: "Kamu, segalanya 💛",
+      text: "Jika hidup memberiku kesempatan untuk memulai dari awal, aku akan memilih jalan yang sama — karena jalan itulah yang membawaku padamu. Dan itu sudah lebih dari cukup.",
+      quote: "Aku mencintaimu, bukan karena kamu sempurna, tapi karena kamu nyata."
+    }
+  }
+];
+
+const songLibrary = [
+  { name: "Perfect - Ed Sheeran (Instrumental)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+  { name: "Lagu Manis (Ambient)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+  { name: "Melodi Kenangan", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+];
+
+// =========== STATE ===========
+let currentPage = 0;
+const totalPages = pages.length;
+const visitedPages = new Set([0]);
+let photoData = {}; // pageIdx -> [{src, caption}]
+let customMessages = {}; // pageIdx -> message
+let isPlaying = false;
+let currentSong = null;
+let songs = [...songLibrary];
+let slideIndex = 0;
+let slideshowInterval = null;
+const audio = document.getElementById('audioPlayer');
+
+// =========== OPEN BOOK ===========
+function openBook() {
+  const cover = document.getElementById('cover-screen');
+  cover.style.transition = 'opacity 0.8s, transform 0.8s';
+  cover.style.opacity = '0';
+  cover.style.transform = 'scale(1.05)';
+  setTimeout(() => {
+    cover.style.display = 'none';
+    const app = document.getElementById('app');
+    app.style.display = 'flex';
+    renderPage();
+    buildTOC();
+    buildMusicList();
+    buildPhotoSelect();
+    buildProgressDots();
+    updateNav();
+  }, 800);
+}
+
+// =========== RENDER PAGE ===========
+function renderPage() {
+  const spread = document.getElementById('bookSpread');
+  spread.classList.remove('flipping');
+  void spread.offsetWidth;
+  spread.classList.add('flipping');
+
+  const pg = pages[currentPage];
+  renderSide('pageLeftContent', pg.left, currentPage * 2 + 1);
+  renderSide('pageRightContent', pg.right, currentPage * 2 + 2);
+  document.getElementById('leftPageNum').textContent = `${currentPage * 2 + 1}`;
+  document.getElementById('rightPageNum').textContent = `${currentPage * 2 + 2}`;
+  document.getElementById('pageIndicator').textContent = `${currentPage + 1} / ${totalPages}`;
+
+  // Update dot
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.remove('active', 'visited');
+    if (i === currentPage) d.classList.add('active');
+    else if (visitedPages.has(i)) d.classList.add('visited');
+  });
+}
+
+function renderSide(containerId, data, pageNum) {
+  const container = document.getElementById(containerId);
+  if (!data) { container.innerHTML = ''; return; }
+
+  const pd = photoData[currentPage] || [];
+  let html = '';
+
+  switch(data.type) {
+    case 'cover-page':
+      html = `
+        <div class="page-date">${pages[currentPage].subtitle}</div>
+        <div class="page-title">${pages[currentPage].emoji} ${data.quote ? '' : pages[currentPage].title}</div>
+        ${renderPhoto(pd[0], data.photoLabel, 160, 0)}
+        <div class="page-quote">${data.quote || ''}</div>
+        <div class="page-text">${getCustomMsg(currentPage, data.text)}</div>
+        <div class="divider-ornament"><span>✦</span></div>
+      `;
+      break;
+
+    case 'timeline-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="divider-ornament"><span>♥</span></div>
+        ${renderPhoto(pd[1], '', 100, 1)}
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          ${data.items.map((item, i) => `
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-date">${item.date}</div>
+                <div class="timeline-text">${item.text}</div>
+              </div>
+            </div>
+            ${i < data.items.length - 1 ? '<div class="timeline-line"></div>' : ''}
+          `).join('')}
+        </div>
+      `;
+      break;
+
+    case 'letter-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="divider-ornament"><span>💌</span></div>
+        <div class="page-text" style="font-style:italic;">${getCustomMsg(currentPage, data.text)}</div>
+        <div class="page-quote">${data.quote || ''}</div>
+      `;
+      break;
+
+    case 'photo-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="polaroid-grid">
+          ${data.photos.map((_, i) => `
+            <div class="mini-polaroid" style="--tilt:${(i%2===0?-1:1)*1.5}deg" onclick="openLightbox(${currentPage}, ${i})">
+              <div class="ph">${pd[i] ? `<img src="${pd[i].src}" alt="">` : '📸'}</div>
+              <div class="pl">${(pd[i] && pd[i].caption) || data.labels[i]}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      break;
+
+    case 'quote-page':
+      html = `
+        <div class="page-title">${data.title || pages[currentPage].title}</div>
+        <div class="divider-ornament"><span>${pages[currentPage].emoji}</span></div>
+        ${data.quotes.map((q, i) => `
+          <div class="page-quote" style="${i>0 ? 'font-size:14px; margin-top:4px;' : ''}">${q}</div>
+          ${i < data.quotes.length - 1 ? '<div class="divider-ornament"><span>·</span></div>' : ''}
+        `).join('')}
+      `;
+      break;
+
+    case 'photo-text':
+      html = `
+        ${renderPhoto(pd[0], data.photoLabel, 160, 0)}
+        <div class="page-text">${getCustomMsg(currentPage, data.text)}</div>
+        ${data.quote ? `<div class="page-quote" style="font-size:14px;">${data.quote}</div>` : ''}
+      `;
+      break;
+
+    case 'polaroid-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="polaroid-grid">
+          ${data.photos.map((_, i) => `
+            <div class="mini-polaroid" style="--tilt:${data.tilts[i]}deg" onclick="openLightbox(${currentPage}, ${i})">
+              <div class="ph">${pd[i] ? `<img src="${pd[i].src}" alt="">` : '📸'}</div>
+              <div class="pl">${(pd[i] && pd[i].caption) || data.labels[i]}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      break;
+
+    case 'heart-words':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="divider-ornament"><span>♥</span></div>
+        <ul class="heart-list">
+          ${data.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      `;
+      break;
+
+    case 'checklist-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="divider-ornament"><span>✦</span></div>
+        <ul class="heart-list">
+          ${data.items.map(item => `<li style="color:${item.includes('✓') ? 'var(--rose)' : 'var(--ink-light)'}">${item}</li>`).join('')}
+        </ul>
+      `;
+      break;
+
+    case 'special-celebration':
+      html = `
+        <div class="page-title">${data.title}</div>
+        ${renderPhoto(pd[0], data.photoLabel, 160, 0)}
+        <div class="page-text">${getCustomMsg(currentPage, data.text)}</div>
+      `;
+      break;
+
+    case 'cake-wishes':
+      html = `
+        <div class="page-title">${data.title}</div>
+        <div class="divider-ornament"><span>🎂</span></div>
+        <ul class="heart-list">
+          ${data.wishes.map(w => `<li>${w}</li>`).join('')}
+        </ul>
+      `;
+      break;
+
+    case 'dream-page':
+      html = `
+        <div class="page-title">${data.title}</div>
+        ${renderPhoto(pd[0], data.photoLabel, 140, 0)}
+        <div class="page-text">${getCustomMsg(currentPage, data.text)}</div>
+      `;
+      break;
+
+    default:
+      html = `<div class="page-text">${JSON.stringify(data)}</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function renderPhoto(pdata, label, height, idx) {
+  if (pdata && pdata.src) {
+    return `
+      <div class="photo-frame" style="height:${height}px; --tilt:${idx%2===0?'-1.5':'1.5'}deg" onclick="openLightbox(currentPage, ${idx})">
+        <img src="${pdata.src}" alt="${pdata.caption || label}" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="photo-caption">${pdata.caption || label}</div>
+    `;
+  }
+  return `
+    <div class="photo-frame" style="height:${height}px; --tilt:${idx%2===0?'-1.5':'1.5'}deg" onclick="openModal('photo-modal')">
+      <div class="photo-placeholder">
+        <span>📷</span>
+        <span>Klik untuk tambah foto</span>
+      </div>
+    </div>
+    ${label ? `<div class="photo-caption" style="opacity:0.4">${label}</div>` : ''}
+  `;
+}
+
+function getCustomMsg(pageIdx, defaultText) {
+  return customMessages[pageIdx] || defaultText;
+}
+
+// =========== NAVIGATION ===========
+function prevPage() {
+  if (currentPage > 0) {
+    currentPage--;
+    visitedPages.add(currentPage);
+    renderPage();
+    updateNav();
+    spawnHearts();
+  }
+}
+
+function nextPage() {
+  if (currentPage < totalPages - 1) {
+    currentPage++;
+    visitedPages.add(currentPage);
+    renderPage();
+    updateNav();
+    spawnHearts();
+  }
+}
+
+function goToPage(idx) {
+  currentPage = idx;
+  visitedPages.add(idx);
+  renderPage();
+  updateNav();
+  closeModal('toc-modal');
+}
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentPage === 0;
+  document.getElementById('nextBtn').disabled = currentPage === totalPages - 1;
+}
+
+function buildProgressDots() {
+  const container = document.getElementById('progressDots');
+  container.innerHTML = pages.map((_, i) => `
+    <button class="dot${i===0?' active':''}" onclick="goToPage(${i})" title="${pages[i].title}"></button>
+  `).join('');
+}
+
+// =========== MODALS ===========
+function openModal(id) {
+  if (id === 'photo-modal') buildPhotoSelect();
+  if (id === 'memory-modal') buildMemoryWall();
+  if (id === 'slideshow-modal') initSlideshow();
+  if (id === 'music-modal') buildMusicList();
+  document.getElementById(id).classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', function(e) {
+    if (e.target === this) {
+      const id = this.id;
+      closeModal(id);
+      if (id === 'slideshow-modal') stopSlideshow();
+    }
+  });
+});
+
+// =========== TABLE OF CONTENTS ===========
+function buildTOC() {
+  const list = document.getElementById('tocList');
+  list.innerHTML = pages.map((p, i) => `
+    <li class="toc-item${i===currentPage?' current':''}" onclick="goToPage(${i})">
+      <span class="toc-num">${p.emoji}</span>
+      <div class="toc-info">
+        <div class="toc-name">${p.title}</div>
+        <div class="toc-sub">${p.subtitle} • Halaman ${i*2+1}–${i*2+2}</div>
+      </div>
+      ${visitedPages.has(i) ? '<span style="color:var(--gold); font-size:12px;">✓</span>' : ''}
+    </li>
+  `).join('');
+}
+
+// =========== PHOTO ===========
+function buildPhotoSelect() {
+  const sel = document.getElementById('photoPage');
+  const msgSel = document.getElementById('msgPage');
+  const opts = pages.map((p, i) => `<option value="${i}">${p.emoji} ${p.title}</option>`).join('');
+  sel.innerHTML = '<option value="">-- Pilih halaman --</option>' + opts;
+  msgSel.innerHTML = '<option value="">-- Pilih halaman --</option>' + opts;
+}
+
+let pendingPhotoSrc = null;
+
+function handlePhotoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    pendingPhotoSrc = e.target.result;
+    const preview = document.getElementById('photoPreview');
+    const previewImg = document.getElementById('photoPreviewImg');
+    previewImg.src = pendingPhotoSrc;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function savePhoto() {
+  const pageIdx = parseInt(document.getElementById('photoPage').value);
+  const slotIdx = parseInt(document.getElementById('photoSlot').value);
+  const caption = document.getElementById('photoCaption').value;
+
+  if (isNaN(pageIdx)) { showToast('⚠️ Pilih halaman dulu!'); return; }
+  if (!pendingPhotoSrc) { showToast('⚠️ Upload foto dulu!'); return; }
+
+  if (!photoData[pageIdx]) photoData[pageIdx] = [];
+  photoData[pageIdx][slotIdx] = { src: pendingPhotoSrc, caption };
+
+  pendingPhotoSrc = null;
+  document.getElementById('photoPreview').style.display = 'none';
+  document.getElementById('photoCaption').value = '';
+  document.getElementById('photoInput').value = '';
+
+  if (pageIdx === currentPage) renderPage();
+  closeModal('photo-modal');
+  showToast('✓ Foto berhasil disimpan!');
+}
+
+// =========== MEMORY WALL ===========
+function buildMemoryWall() {
+  const wall = document.getElementById('memoryWall');
+  let html = '';
+  let count = 0;
+  for (let p in photoData) {
+    photoData[p].forEach((photo, i) => {
+      if (photo) {
+        html += `<div class="memory-thumb" onclick="openLightboxDirect('${photo.src}', '${photo.caption || pages[p].title}')">
+          <img src="${photo.src}" alt="${photo.caption || ''}">
+        </div>`;
+        count++;
+      }
+    });
+  }
+  if (count === 0) {
+    html = `<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--brown); opacity:0.5; font-family:'Dancing Script'; font-size:18px;">
+      Belum ada foto... Tambah kenangan indahmu! 📸
+    </div>`;
+  }
+  wall.innerHTML = html;
+}
+
+// =========== MESSAGE ===========
+function saveMessage() {
+  const pageIdx = parseInt(document.getElementById('msgPage').value);
+  const text = document.getElementById('msgText').value.trim();
+  if (isNaN(pageIdx)) { showToast('⚠️ Pilih halaman dulu!'); return; }
+  if (!text) { showToast('⚠️ Tulis pesan dulu!'); return; }
+  customMessages[pageIdx] = text;
+  document.getElementById('msgText').value = '';
+  if (pageIdx === currentPage) renderPage();
+  closeModal('message-modal');
+  showToast('💌 Pesan berhasil disimpan!');
+}
+
+// =========== LIGHTBOX ===========
+function openLightbox(pageIdx, photoIdx) {
+  const pd = photoData[pageIdx];
+  if (pd && pd[photoIdx]) {
+    openLightboxDirect(pd[photoIdx].src, pd[photoIdx].caption);
+  }
+}
+
+function openLightboxDirect(src, caption) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxCaption').textContent = caption || '';
+  openModal('lightbox-modal');
+}
+
+// =========== SLIDESHOW ===========
+function getAllPhotos() {
+  let all = [];
+  for (let p in photoData) {
+    photoData[p].forEach(photo => {
+      if (photo) all.push({ ...photo, page: pages[p].title });
+    });
+  }
+  return all;
+}
+
+function initSlideshow() {
+  const photos = getAllPhotos();
+  const content = document.getElementById('slideshowContent');
+  const caption = document.getElementById('slideshowCaption');
+  if (photos.length === 0) {
+    content.innerHTML = `<div class="slideshow-placeholder"><span>📸</span><span style="font-family:'Dancing Script'; font-size:18px; color:rgba(201,151,62,0.5)">Belum ada foto</span></div>`;
+    caption.textContent = 'Tambahkan foto untuk memulai slideshow ✦';
+    return;
+  }
+  slideIndex = Math.max(0, Math.min(slideIndex, photos.length - 1));
+  showSlide(photos, slideIndex);
+}
+
+function showSlide(photos, idx) {
+  if (!photos || photos.length === 0) return;
+  const photo = photos[idx];
+  document.getElementById('slideshowContent').innerHTML = `<img class="slideshow-img" src="${photo.src}" alt="">`;
+  document.getElementById('slideshowCaption').textContent = photo.caption || photo.page;
+}
+
+function slideshowNext() {
+  const photos = getAllPhotos();
+  if (!photos.length) return;
+  slideIndex = (slideIndex + 1) % photos.length;
+  showSlide(photos, slideIndex);
+}
+
+function slideshowPrev() {
+  const photos = getAllPhotos();
+  if (!photos.length) return;
+  slideIndex = (slideIndex - 1 + photos.length) % photos.length;
+  showSlide(photos, slideIndex);
+}
+
+function toggleSlideshow() {
+  const btn = document.getElementById('ssPlayBtn');
+  if (slideshowInterval) {
+    stopSlideshow();
+  } else {
+    slideshowInterval = setInterval(slideshowNext, 3000);
+    btn.textContent = '⏸ Pause';
+  }
+}
+
+function stopSlideshow() {
+  if (slideshowInterval) {
+    clearInterval(slideshowInterval);
+    slideshowInterval = null;
+  }
+  const btn = document.getElementById('ssPlayBtn');
+  if (btn) btn.textContent = '▶ Play';
+}
+
+// =========== MUSIC ===========
+function buildMusicList() {
+  const list = document.getElementById('songList');
+  list.innerHTML = songs.map((s, i) => `
+    <div class="song-item${currentSong === i ? ' playing' : ''}">
+      <span class="song-icon">🎵</span>
+      <span class="song-name">${s.name}</span>
+      <button class="song-play" onclick="playSong(${i})">${currentSong === i && isPlaying ? '⏸' : '▶'}</button>
+    </div>
+  `).join('');
+}
+
+function playSong(idx) {
+  if (currentSong === idx && isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶';
+  } else {
+    currentSong = idx;
+    audio.src = songs[idx].url;
+    audio.play().catch(() => showToast('⚠️ Tidak bisa memutar lagu ini'));
+    isPlaying = true;
+    document.getElementById('playBtn').textContent = '⏸';
+    document.getElementById('songTitle').textContent = '♪ ' + songs[idx].name;
+  }
+  buildMusicList();
+}
+
+function togglePlay() {
+  if (currentSong === null && songs.length > 0) {
+    playSong(0);
+    return;
+  }
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶';
+  } else {
+    audio.play().catch(() => {});
+    isPlaying = true;
+    document.getElementById('playBtn').textContent = '⏸';
+  }
+}
+
+function toggleMute() {
+  audio.muted = !audio.muted;
+  document.querySelector('.music-vol').textContent = audio.muted ? '🔇 Mute' : '🔊 Vol';
+}
+
+function addSong() {
+  const url = document.getElementById('songUrl').value.trim();
+  const name = document.getElementById('songName').value.trim();
+  if (!url || !name) { showToast('⚠️ Isi URL dan nama lagu!'); return; }
+  songs.push({ name, url });
+  document.getElementById('songUrl').value = '';
+  document.getElementById('songName').value = '';
+  buildMusicList();
+  showToast('✓ Lagu berhasil ditambahkan!');
+}
+
+function seekMusic(e) {
+  const wrap = e.currentTarget;
+  const rect = wrap.getBoundingClientRect();
+  const ratio = (e.clientX - rect.left) / rect.width;
+  if (audio.duration) {
+    audio.currentTime = ratio * audio.duration;
+  }
+}
+
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('musicProgress').style.width = pct + '%';
+  }
+});
+
+// =========== SHARE ===========
+function printPage() {
+  window.print();
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    showToast('✓ Link disalin!');
+  }).catch(() => {
+    showToast('Link: ' + window.location.href);
+  });
+}
+
+// =========== HEARTS ===========
+function spawnHearts() {
+  const emojis = ['❤️', '💕', '💖', '✨', '🌸'];
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'floating-heart';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = (20 + Math.random() * 60) + 'vw';
+      el.style.bottom = '80px';
+      el.style.animationDuration = (2 + Math.random()) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }, i * 200);
+  }
+}
+
+// =========== TOAST ===========
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// =========== KEYBOARD NAVIGATION ===========
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') nextPage();
+  if (e.key === 'ArrowLeft') prevPage();
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      stopSlideshow();
+    });
+  }
+});
+
+// =========== SWIPE SUPPORT ===========
+let touchStartX = 0;
+document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) {
+    if (dx < 0) nextPage();
+    else prevPage();
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
